@@ -71,8 +71,11 @@ def combine_csharp_files(source_dir, output_file):
     with open(output_file, 'w', encoding='utf-8') as out_f:
         # Добавляем общий заголовок
         out_f.write("// ======== ОБЪЕДИНЕННЫЙ ФАЙЛ C# ========\n\n")
-        
+        excludes_dirs = ['git','bin','obj']
         for root, _, files in os.walk(source_dir):
+            el=[x for x in excludes_dirs if x in root]
+            if el:
+                continue
             for file in files:
                 if file.endswith('.cs') and file !='combined.cs':
                     file_path = os.path.join(root, file)
